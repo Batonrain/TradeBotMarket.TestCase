@@ -1,5 +1,6 @@
 using ArbitrageService.Core.Interfaces;
 using ArbitrageService.Infrastructure.Data;
+using ArbitrageService.Infrastructure.HttpFactory;
 using ArbitrageService.Infrastructure.Repositories;
 using ArbitrageService.Infrastructure.Services;
 using ArbitrageService.Worker.Jobs;
@@ -20,9 +21,22 @@ try
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(hostContext.Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddHttpClient("BinanceSpotClient", client =>
+            {
+                client.BaseAddress = new Uri("https://api.binance.com/api/v3");
+            });
+
+            services.AddHttpClient("BinanceFuturesClient", client =>
+            {
+                client.BaseAddress = new Uri("https://fapi.binance.com/fapi/v1");
+            });
+
+            services.AddSingleton<IBinanceHttpClientFactory, BinanceHttpClientFactory>();
+            services.AddTransient<BinanceService>();
+
+
             services.AddScoped<IPriceDifferenceRepository, PriceDifferenceRepository>();
             services.AddScoped<IBinanceService, BinanceService>();
-            services.AddHttpClient<IBinanceService, BinanceService>();
 
             services.AddQuartz(q =>
             {

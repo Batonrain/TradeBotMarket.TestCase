@@ -3,30 +3,30 @@ using ArbitrageService.Core.Models;
 using System.Net.Http.Json;
 using System.Globalization;
 using ArbitrageService.Core.Models.Binance;
+using ArbitrageService.Infrastructure.HttpFactory;
 
 namespace ArbitrageService.Infrastructure.Services;
 
 public class BinanceService : IBinanceService
 {
-    private readonly HttpClient _httpClient;
-    private readonly Dictionary<string, decimal> _lastKnownPrices;
-    private const string SpotBaseUrl = "https://api.binance.com/api/v3";
-    private const string FuturesBaseUrl = "https://fapi.binance.com/fapi/v1";
+    private readonly HttpClient _spotClient;
+    private readonly HttpClient _futuresClient;
+    private readonly Dictionary<string, decimal> _lastKnownPrices = new Dictionary<string, decimal>();
 
-    public BinanceService(HttpClient httpClient)
+    public BinanceService(IBinanceHttpClientFactory clientFactory)
     {
-        _httpClient = httpClient;
-        _lastKnownPrices = new Dictionary<string, decimal>();
+        _spotClient = clientFactory.CreateSpotClient();
+        _futuresClient = clientFactory.CreateFuturesClient();
     }
 
     public async Task<decimal> GetFuturesPriceAsync(string symbol)
     {
         try
         {
-            var baseUrl = symbol.Contains("_") ? FuturesBaseUrl : SpotBaseUrl;
+            HttpClient client = symbol.Contains("_") ? _futuresClient : _spotClient;
             var requestSymbol = symbol.Split('_')[0];
 
-            var response = await _httpClient.GetFromJsonAsync<BinancePriceResponse>($"{baseUrl}/ticker/price?symbol={requestSymbol}");
+            var response = await client.GetFromJsonAsync<BinancePriceResponse>($"ticker/price?symbol={requestSymbol}");
 
             if (response == null)
             {
@@ -52,14 +52,14 @@ public class BinanceService : IBinanceService
     {
         try
         {
-            var baseUrl = symbol.Contains("_") ? FuturesBaseUrl : SpotBaseUrl;
+            HttpClient client = symbol.Contains("_") ? _futuresClient : _spotClient;
             var requestSymbol = symbol.Split('_')[0];
-            
+
             var startTimeMillis = ((DateTimeOffset)startTime).ToUnixTimeMilliseconds();
             var endTimeMillis = ((DateTimeOffset)endTime).ToUnixTimeMilliseconds();
-            
-            var response = await _httpClient.GetFromJsonAsync<BinanceKlineResponse[]>(
-                $"{baseUrl}/klines?symbol={requestSymbol}&interval=1h&startTime={startTimeMillis}&endTime={endTimeMillis}");
+
+            var response = await client.GetFromJsonAsync<BinanceKlineResponse[]>(
+                $"klines?symbol={requestSymbol}&interval=1h&startTime={startTimeMillis}&endTime={endTimeMillis}");
 
             if (response == null || !response.Any())
             {
@@ -97,4 +97,4 @@ public class BinanceService : IBinanceService
             };
         }
     }
-} 
+}
