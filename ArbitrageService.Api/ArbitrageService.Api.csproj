@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ArbitrageService.Core\ArbitrageService.Core.csproj" />
     <ProjectReference Include="..\ArbitrageService.Infrastructure\ArbitrageService.Infrastructure.csproj" />
+    <ProjectReference Include="..\ServiceDefaults\ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project> 

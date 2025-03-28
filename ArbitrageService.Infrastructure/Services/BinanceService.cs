@@ -23,7 +23,7 @@ public class BinanceService : IBinanceService
     {
         try
         {
-            HttpClient client = symbol.Contains("_") ? _futuresClient : _spotClient;
+            var client = symbol.Contains("_") ? _futuresClient : _spotClient;
             var requestSymbol = symbol.Split('_')[0];
 
             var response = await client.GetFromJsonAsync<BinancePriceResponse>($"ticker/price?symbol={requestSymbol}");
@@ -52,7 +52,7 @@ public class BinanceService : IBinanceService
     {
         try
         {
-            HttpClient client = symbol.Contains("_") ? _futuresClient : _spotClient;
+            var client = symbol.Contains("_") ? _futuresClient : _spotClient;
             var requestSymbol = symbol.Split('_')[0];
 
             var startTimeMillis = ((DateTimeOffset)startTime).ToUnixTimeMilliseconds();
