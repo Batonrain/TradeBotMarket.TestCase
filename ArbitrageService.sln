@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArbitrageService.Core", "ArbitrageService.Core\ArbitrageService.Core.csproj", "{656AE986-7431-4A86-B7C7-B85A9CA9017C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArbitrageService.Infrastructure", "ArbitrageService.Infrastructure\ArbitrageService.Infrastructure.csproj", "{CFE37D83-FD15-4E0F-A3E3-D80E7CE76F8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArbitrageService.Api", "ArbitrageService.Api\ArbitrageService.Api.csproj", "{03988896-991C-478D-9CFE-712B98FFBF38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArbitrageService.Worker", "ArbitrageService.Worker\ArbitrageService.Worker.csproj", "{A6EF2D2F-40A9-494C-97C1-594B3AC4B2AC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{656AE986-7431-4A86-B7C7-B85A9CA9017C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{656AE986-7431-4A86-B7C7-B85A9CA9017C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{656AE986-7431-4A86-B7C7-B85A9CA9017C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{656AE986-7431-4A86-B7C7-B85A9CA9017C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFE37D83-FD15-4E0F-A3E3-D80E7CE76F8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFE37D83-FD15-4E0F-A3E3-D80E7CE76F8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFE37D83-FD15-4E0F-A3E3-D80E7CE76F8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFE37D83-FD15-4E0F-A3E3-D80E7CE76F8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03988896-991C-478D-9CFE-712B98FFBF38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03988896-991C-478D-9CFE-712B98FFBF38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03988896-991C-478D-9CFE-712B98FFBF38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03988896-991C-478D-9CFE-712B98FFBF38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6EF2D2F-40A9-494C-97C1-594B3AC4B2AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6EF2D2F-40A9-494C-97C1-594B3AC4B2AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6EF2D2F-40A9-494C-97C1-594B3AC4B2AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6EF2D2F-40A9-494C-97C1-594B3AC4B2AC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
