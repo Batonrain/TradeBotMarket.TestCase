@@ -8,15 +8,18 @@ namespace ArbitrageService.Api.Controllers;
 [Route("api/[controller]")]
 public class PriceDifferenceController : ControllerBase
 {
+    private readonly IBinanceService _binanceService;
     private readonly IPriceDifferenceRepository _repository;
     private readonly ILogger<PriceDifferenceController> _logger;
 
     public PriceDifferenceController(
         IPriceDifferenceRepository repository,
-        ILogger<PriceDifferenceController> logger)
+        ILogger<PriceDifferenceController> logger,
+        IBinanceService binanceService)
     {
         _repository = repository;
         _logger = logger;
+        _binanceService = binanceService;
     }
 
     [HttpGet("latest")]
@@ -56,6 +59,24 @@ public class PriceDifferenceController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error getting price difference range");
+            return StatusCode(500, "Internal server error");
+        }
+    }
+
+    [HttpGet("futures-price-range")]
+    public async Task<ActionResult<FuturesPrice>> GetFuturesPriceByTimeRange(
+        [FromQuery] string symbol,
+        [FromQuery] DateTime startTime,
+        [FromQuery] DateTime endTime)
+    {
+        try
+        {
+            var futuresPrice = await _binanceService.GetFuturesPriceByTimeRangeAsync(symbol, startTime, endTime);
+            return Ok(futuresPrice);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Ошибка при получении цены по диапазону времени для символа {Symbol}", symbol);
             return StatusCode(500, "Internal server error");
         }
     }

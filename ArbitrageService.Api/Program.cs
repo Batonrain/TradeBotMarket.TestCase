@@ -1,4 +1,5 @@
 using ArbitrageService.Core.Interfaces;
+using ArbitrageService.Infrastructure;
 using ArbitrageService.Infrastructure.Data;
 using ArbitrageService.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddBinanceHttpService();
 
 builder.Services.AddScoped<IPriceDifferenceRepository, PriceDifferenceRepository>();
 
